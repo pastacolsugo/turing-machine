@@ -1,0 +1,123 @@
+struttura input
+
+{
+	- commenti:
+		single line  // ...
+			regex //.$
+		multi line /* ... */
+}
+
+
+{	
+	alfabeto input
+		line 1:
+			^[c1, c2, c3, ...]$
+}	//non strettamente necessario, usare un set per ottenere l'alfabeto?
+
+{	
+	dv1:
+		start tape, inizia sempre da zero
+		^tape : [c1c2c3....]$
+		circondato da parentesi quadre
+		non puo contenere spazi
+	v2:
+		^[c1c2c3c4...]$
+
+	v3:
+		^tapeSize [c1c2c3c4...]$
+		tapeSize = dimensione del tape, le caselle non inizializzate esplicitamente vengono inizializzate al primo simbolo dell'alfabeto
+
+}
+
+{
+	
+	/*
+		09-Aug-16:
+		line number:
+			- if symbol
+				.new symbol
+				.move cursor
+				.jump line
+			- if symbol
+				.new symbol
+				.move cursor
+				.jump line
+			.
+			.
+			.
+		Array of maps? yeah
+
+	*/
+
+	CODE\n
+	line 1		
+		if 1		
+			sym x		//non cambia sym
+			cur 1		
+			jmp 1		
+		if 0		
+			sym x		//non cambia sym
+			cur 1		
+			jmp 2		
+
+	line 2		
+		if 1
+			sym 1
+			cur 1
+			jmp 2
+
+
+	code section:
+		//[linea]
+		//se [casella puntata] contiene [simbolo]
+		//cambia simbolo con [simbolo2]
+		//muovi il [cursore]
+		//salta a [linea]
+
+	implementazione:
+		classe linea_codice{
+			int numero_linea;
+			struct entry {
+				char symbol;
+				char newSymbol;
+				int cursorMove;
+				int jumpToLine;
+			}
+			entry codice [alphabet_lenght];		//Nel costruttore passo alphabet_lenght
+			funzione che prende un carattere e mi trova la linea di codice corrispondente
+		}
+
+		array di oggetti linea_codice;	//nope
+
+
+}
+
+Reference:
+
+25/06/2016
+- Si possono utilizzare commenti su linea singola, con il simbolo "//"
+- Si possono utilizzare commenti su piu' linee, con il simbolo "/*" per aprire e "*/" per chiudere
+- E' obbligatorio inserire l'alfabeto dei caratteri, in particolare:
+	+ nella prima riga
+	+ circondato da parentesi quadre "[]"
+	+ possono essere separati da spazi bianchi e/o virgole (vengono ignorate)
+	+ possono essere solo caratteri ASCII alfanumerici [0-9][a-z][A-Z]
+
+09/08/2016	(Boston)
+- Il codice viene memorizzato con un Array di Maps
+
+11/08/2016	(Boston)
+- Inizio implementazione Array di Maps
+- I commenti vengono sostituiti con uno spazio bianco
+- Gli spazi bianchi tra le linee e i commenti creano casini con il parsing del codice
+	. Cambiare il commentRemover per eliminare anche gli spazi ---> no
+	. Creare una funzione per eliminare gli spazi ---> yep
+
+IDEAs:
+
+ToDos:
+- Improve sequence check using substrings instead of letter-by-letter
+
+
+
+
